@@ -1,6 +1,7 @@
 ---
 name: python-testing-patterns
 description: Implement comprehensive testing strategies with pytest, fixtures, mocking, and test-driven development. Use when writing Python tests, setting up test suites, or implementing testing best practices.
+license: Proprietary. See parent repository LICENSE
 ---
 
 # Python Testing Patterns

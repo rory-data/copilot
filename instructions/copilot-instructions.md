@@ -27,11 +27,20 @@ Instead of reading multiple files, use this decision matrix:
 
 | Task Type         | Primary Instructions                             | Secondary References |
 | ----------------- | ------------------------------------------------ | -------------------- |
-| **Development**   | Core Engineering Principles + Language-specific  | Workflow Standards   |
+| **Development**   | Core Engineering Principles + Language Skills    | Workflow Standards   |
 | **Documentation** | Language/Markdown + Workflow Standards           | Templates            |
-| **Code Review**   | Core Engineering Principles                      | Language-specific    |
-| **Testing**       | Core Engineering Principles + Language-specific  | Workflow Standards   |
+| **Code Review**   | Core Engineering Principles                      | Language Skills      |
+| **Testing**       | Core Engineering Principles + Language Skills    | Workflow Standards   |
 | **Architecture**  | Core Engineering Principles + Workflow Standards | Templates            |
+
+**Language-Specific Skills** (activate on-demand):
+
+- `python-conventions`: Python code (PEP 8, type hints, uv, ruff)
+- `golang-conventions`: Go code (idioms, testing, concurrency)
+- `docker-best-practices`: Dockerfiles and container configuration
+- `markdown-conventions`: Markdown documentation and content creation
+
+These skills are loaded automatically when working with relevant file types or when explicitly requested.
 
 ## Engineering Excellence Framework
 

@@ -1,7 +1,7 @@
 ---
 name: skill-creator
 description: Guide for creating effective skills. This skill should be used when users want to create a new skill (or update an existing skill) that extends the Agent's capabilities with specialised knowledge, workflows, or tool integrations.
-license: Complete terms in LICENSE.txt
+license: Proprietary. Complete terms in LICENSE.txt
 ---
 
 # Skill Creator
@@ -334,7 +334,6 @@ scripts/package_skill.py <path/to/skill-folder> ./dist
 The packaging script will:
 
 1. **Validate** the skill automatically, checking:
-
    - YAML frontmatter format and required fields
    - Skill naming conventions and directory structure
    - Description completeness and quality

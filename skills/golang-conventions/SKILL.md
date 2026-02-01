@@ -1,6 +1,7 @@
 ---
-description: "Go coding conventions and modern best practices"
-applyTo: "**/*.go"
+name: golang-conventions
+description: Go coding standards for Go 1.21+, including idioms, error handling, testing patterns, concurrency, and golangci-lint configuration. Use when writing, reviewing, or refactoring Go code, working with goroutines, or setting up Go projects.
+license: Proprietary. See parent repository LICENSE
 ---
 
 # Go Coding Conventions

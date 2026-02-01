@@ -1,6 +1,7 @@
 ---
-applyTo: "Dockerfile"
-description: "Essential Docker best practices for optimised, secure, and efficient container images"
+name: docker-best-practices
+description: Docker and container image best practices including multi-stage builds, security hardening, layer optimization, and Alpine/slim variants. Use when writing or reviewing Dockerfiles, container configurations, or docker-compose files.
+license: Proprietary. See parent repository LICENSE
 ---
 
 # Docker Best Practices
@@ -244,3 +245,10 @@ USER nextjs
 EXPOSE 3000
 CMD ["node", "dist/server.js"]
 ```
+
+## Alignment with Core Principles
+
+- **Security**: Non-root users, minimal attack surface, version pinning
+- **Efficiency**: Multi-stage builds, layer caching, minimal base images
+- **Reproducibility**: Pinned versions, explicit dependencies
+- **Maintainability**: Clear structure, documented patterns, consistent practices

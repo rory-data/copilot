@@ -6,7 +6,7 @@ description: "Optimised testing strategy leveraging core engineering principles"
 
 ## Goal
 
-Generate comprehensive testing strategies following **Core Engineering Principles** (see `../instructions/core/engineering-principles.instructions.md`) and **Python best practices** (see `../instructions/language/python.instructions.md`).
+Generate comprehensive testing strategies following **Core Engineering Principles** (see `../instructions/core/engineering-principles.instructions.md`) and **Python best practices** (use the `python-conventions` and `python-testing-patterns` skills).
 
 ## Quick Reference
 

@@ -1,6 +1,7 @@
 ---
 name: principal-data-engineer
-description: Expert-level guidance on data platform architecture, pipeline design patterns, and engineering rigor. Use this skill when designing new data platforms, reviewing complex DAGs, or establishing engineering standards.
+description: Expert-level guidance on data platform architecture, pipeline design patterns, and engineering rigor. Use when designing data platforms, reviewing Airflow DAGs, working with Polars/DuckDB/dbt, establishing data quality contracts, implementing composable data stacks, or architecting lakehouse solutions with Iceberg.
+license: Proprietary. See parent repository LICENSE
 ---
 
 # Principal Data Engineer
@@ -25,12 +26,24 @@ Focus on the "-ilities": Scalability, Reliability, Maintainability, and Observab
 Enforce strict standards for Airflow and Python code.
 
 - **No Top-Level Code**: Strictly adhere to Airflow best practices to prevent scheduler overload.
+- **Idempotency**: All DAG tasks must be re-runnable without side effects or data duplication.
 - **Atomic Tasks**: Each task should do one thing. If it fails, it should be clear what failed.
 - **Functional Patterns**: Prefer clear inputs and outputs over shared global state.
+- **TaskFlow API**: Use Airflow 2.0+ decorator syntax (`@dag`, `@task`) for clarity and type safety.
 - **Testing**:
   - **Unit**: Test transform logic in isolation.
-  - **Integration**: Test DAG integrity and component connectivity.
+  - **Integration**: Test DAG integrity and component connectivity with `DagBag`.
   - **Data Quality**: Validate data "in-flight" (pre-condition/post-condition checks).
+
+**Critical Anti-Patterns to Avoid**:
+
+- ❌ Top-level code execution (runs on every scheduler loop)
+- ❌ Non-idempotent operations (append without deduplication)
+- ❌ Direct metadata database access (use Airflow's public API)
+- ❌ Hardcoded credentials (use Airflow Connections and Variables)
+- ❌ Excessive dynamic DAG generation (use dynamic task mapping instead)
+
+**See [airflow-best-practices.md](references/airflow-best-practices.md) for comprehensive patterns and examples.**
 
 ### 3. Data Quality & Observability
 

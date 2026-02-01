@@ -1,1 +1,8 @@
 .DS_Store
+
+logs/
+pkg/
+session-state/
+
+command-history-state.json
+config.json
