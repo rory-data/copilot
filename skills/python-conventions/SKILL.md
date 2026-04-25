@@ -13,7 +13,7 @@ license: Proprietary. See parent repository LICENSE
 - **Formatting & Linting**: Use Astral's `ruff` (replaces flake8, isort, pylint, Black)
 - **Type hints**: Modern built-in annotations (`list[str]`, `dict[str, int]`)
 - **Type checking**: Use Astral's `ty` for type checking
-- **Pre-commit**: User `prek` for pre-commit hooks
+- **Pre-commit**: Use `prek` for pre-commit hooks
 - **Documentation**: Google-style docstrings following PEP 257
 
 ## Core Instructions

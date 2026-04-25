@@ -1,25 +1,12 @@
 ---
 name: python-testing-patterns
-description: Implement comprehensive testing strategies with pytest, fixtures, mocking, and test-driven development. Use when writing Python tests, setting up test suites, or implementing testing best practices.
+description: Implement comprehensive testing strategies with pytest, fixtures, mocking, and test-driven development. Use when writing unit or integration tests, setting up test infrastructure, implementing TDD, testing async code, mocking external dependencies, writing property-based tests, testing database operations, or debugging failing tests. Invoke this skill any time the user wants to write or improve Python tests.
 license: Proprietary. See parent repository LICENSE
 ---
 
 # Python Testing Patterns
 
 Master pytest fundamentals through essential patterns and practical examples, from basic unit tests to mocking external dependencies.
-
-## When to Use This Skill
-
-- Writing unit tests for Python code
-- Setting up test suites and test infrastructure
-- Implementing test-driven development (TDD)
-- Creating integration tests for APIs and services
-- Mocking external dependencies and services
-- Testing async code and concurrent operations
-- Setting up continuous testing in CI/CD
-- Implementing property-based testing
-- Testing database operations
-- Debugging failing tests
 
 ## Core Concepts
 

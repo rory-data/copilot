@@ -2,8 +2,9 @@
 *
 **/.DS_Store
 
-# whitelist .gitignore
+# whitelist configs
 !.gitignore
+!settings.json
 
 # whitelist specific folders and their contents
 # specify the root folders first so Git can traverse into them
