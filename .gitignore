@@ -1,8 +1,20 @@
-.DS_Store
+# ignore everything
+*
+**/.DS_Store
 
-logs/
-pkg/
-session-state/
+# whitelist .gitignore
+!.gitignore
 
-command-history-state.json
-config.json
+# whitelist specific folders and their contents
+# specify the root folders first so Git can traverse into them
+!instructions/
+!instructions/**
+!prompts/
+!prompts/**
+!skills/
+!skills/**
+
+# exclude .DS_Store from whitelisted directories
+instructions/**/.DS_Store
+prompts/**/.DS_Store
+skills/**/.DS_Store
