@@ -5,147 +5,124 @@ applyTo: "**"
 
 # Core Engineering Principles
 
-## Quick Reference
+## Single Responsibility
 
-- **SOLID Principles**: Single responsibility, Open/closed, Liskov substitution, Interface segregation, Dependency inversion
-- **Quality Mantras**: DRY, YAGNI, KISS - applied pragmatically based on context
-- **Test Strategy**: Test pyramid (70% unit, 20% integration, 10% e2e), AAA pattern, Given/When/Then
-- **Clean Code**: Readable, maintainable code that tells a story and minimises cognitive load
+Each class or function has one reason to change. When a class does two things, split it:
 
-## Engineering Fundamentals
+```python
+# WRONG: Mixed responsibilities
+class User:
+    def save_to_db(self) -> None: ...
+    def send_welcome_email(self) -> None: ...
 
-### Design Patterns
+# CORRECT: Separate concerns
+class UserRepository:
+    def save(self, user: "User") -> None: ...
 
-Apply pragmatically based on context:
+class UserNotifier:
+    def send_welcome_email(self, user: "User") -> None: ...
+```
 
-- **Strategy Pattern**: Encapsulate interchangeable algorithms for different implementations
-- **Dependency Injection**: Provide dependencies rather than instantiating them internally
-- **Adapter Pattern**: Make incompatible interfaces work together
+## Don't Repeat Yourself (DRY)
 
-For comprehensive coverage, refer to established design pattern resources. Focus on solving the specific problem rather than applying patterns prematurely.
+Extract shared logic rather than duplicating it. Every piece of knowledge should have a single, authoritative representation:
 
-### SOLID Principles
+```python
+# WRONG: Duplicated validation
+def process_payment(amount: float) -> None:
+    if amount <= 0:
+        raise ValueError("Amount must be positive")
+    ...
 
-- **Single Responsibility**: Each class/function has one reason to change
+def process_refund(amount: float) -> None:
+    if amount <= 0:
+        raise ValueError("Amount must be positive")
+    ...
 
-  ```python
-  # Good: Single responsibility
-  class UserValidator:
-      def validate_email(self, email: str) -> bool:
-          return "@" in email
+# CORRECT: Extract shared logic
+def _validate_positive_amount(amount: float) -> None:
+    if amount <= 0:
+        raise ValueError("Amount must be positive")
 
-  class UserRepository:
-      def save(self, user: User) -> None:
-          # Save to database
-          pass
-  ```
+def process_payment(amount: float) -> None:
+    _validate_positive_amount(amount)
+    ...
+```
 
-- **Open/Closed**: Open for extension, closed for modification
+## Dependency Inversion
 
-  ```python
-  # Good: Use protocols for extension
-  from typing import Protocol
+Depend on abstractions, not concretions. Inject dependencies rather than instantiating them internally — this makes code testable and adaptable:
 
-  class PaymentProcessor(Protocol):
-      def process(self, amount: float) -> bool: ...
+```python
+# WRONG: Hard-coded dependency
+class OrderService:
+    def __init__(self) -> None:
+        self.db = PostgresDatabase()  # Impossible to test or swap
 
-  class StripeProcessor:
-      def process(self, amount: float) -> bool:
-          # Stripe implementation
-          return True
-  ```
+# CORRECT: Injected abstraction
+class OrderService:
+    def __init__(self, db: Database) -> None:
+        self.db = db
+```
 
-- **Liskov Substitution**: Subtypes must be substitutable for their base types
-- **Interface Segregation**: Many client-specific interfaces better than one general-purpose
-- **Dependency Inversion**: Depend on abstractions, not concretions
-  ```python
-  # Good: Depend on abstraction
-  def process_payment(processor: PaymentProcessor, amount: float):
-      return processor.process(amount)
-  ```
+## Error Handling
 
-### Quality Attributes Balance
+Never swallow exceptions silently. Handle errors explicitly with context:
 
-- **Testability**: Design for easy unit and integration testing
-- **Maintainability**: Code should be easy to understand and modify
-- **Scalability**: Consider future growth and load requirements
-- **Performance**: Optimise where it matters, measure first
-- **Security**: Build security in from the ground up
-- **Understandability**: Code should tell a story
+```python
+# WRONG: Silent failure
+def load_config(path: str) -> dict:
+    try:
+        return json.load(open(path))
+    except Exception:
+        return {}  # Hides the problem
 
-## Clean Code Practices
+# CORRECT: Explicit handling with context
+def load_config(path: str) -> dict:
+    try:
+        with open(path) as f:
+            return json.load(f)
+    except FileNotFoundError:
+        raise ConfigError(f"Config file not found: {path}")
+    except json.JSONDecodeError as exc:
+        raise ConfigError(f"Invalid JSON in config {path}: {exc}") from exc
+```
 
-### Code Organisation
+## YAGNI & KISS
 
-- **Separation of Concerns**: Each module has a single, well-defined responsibility
-- **Minimal Coupling**: Reduce dependencies between modules
-- **High Cohesion**: Elements within a module work together toward a common goal
-- **Clear Module Boundaries**: Well-defined interfaces between components
+Build only what is explicitly needed — do not anticipate requirements. Prefer the simplest correct solution. Every added abstraction must earn its place.
 
-### Naming and Structure
+## Function Size
 
-- **Descriptive Names**: Functions and variables should explain their purpose
-- **Consistent Conventions**: Follow language-specific naming patterns
-- **Meaningful Comments**: Explain WHY, not WHAT (see commenting-instructions.md)
-- **Function Size**: Small, focused functions that do one thing well
+Keep functions small and focused: 50 lines maximum, one level of abstraction per function, no nesting deeper than 3 levels.
 
-## Test Automation Strategy
+## Testing
 
-### Test Pyramid Implementation
+Test pyramid: **70% unit, 20% integration, 10% end-to-end.** Target 80% coverage with meaningful assertions, not padding.
 
-- **Unit Tests (70%)**: Fast, isolated, test individual components
-- **Integration Tests (20%)**: Test component interactions
-- **End-to-End Tests (10%)**: Test complete user journeys
+Structure tests with AAA — Arrange, Act, Assert:
 
-### Test Structure Standards
+```python
+def test_discount_applies_to_premium_orders():
+    # Arrange
+    order = Order(total=200.0, customer_tier="premium")
 
-- **AAA Pattern**: Arrange, Act, Assert for clear test structure
-- **Given/When/Then**: Structure test cases for clarity and consistency
-- **Comprehensive Coverage**: Target >80% with meaningful tests, not just metrics
-- **Edge Case Coverage**: Include boundary conditions, invalid inputs, error scenarios
+    # Act
+    discount = calculate_discount(order)
 
-### Quality Patterns
+    # Assert
+    assert discount == 20.0
+```
 
-- **Error Handling**: Graceful degradation and meaningful error messages
-- **Testing Strategies**: Unit, integration, property-based testing where appropriate
-- **Refactoring Patterns**: Safe transformation of code structure
-- **Architectural Best Practices**: Layered architecture, dependency injection
+Test behaviour, not implementation. Test boundary conditions and error paths.
 
-## Implementation Excellence
+## Code Quality Checklist
 
-### Requirements Analysis
+Before committing:
 
-- **Clear Requirements**: Document assumptions explicitly
-- **Edge Case Identification**: Consider boundary conditions and failure modes
-- **Risk Assessment**: Identify and mitigate technical and business risks
-- **Dependency Mapping**: Understand system interactions and constraints
-
-### Pragmatic Craft
-
-- **Good Over Perfect**: Balance engineering excellence with delivery needs
-- **Never Compromise Fundamentals**: Maintain code quality and architectural integrity
-- **Forward Thinking**: Anticipate future needs and technical evolution
-- **Technical Debt Management**: Document debt, plan remediation, assess impact
-
-## Technical Leadership Principles
-
-### Code Review Excellence
-
-- **Clear Feedback**: Specific, actionable improvement recommendations
-- **Knowledge Sharing**: Explain the reasoning behind suggestions
-- **Consistent Standards**: Apply principles fairly and consistently
-- **Growth Mindset**: Focus on learning and improvement opportunities
-
-### Quality Assurance
-
-- **Continuous Improvement**: Regular retrospectives on processes and practices
-- **Metric-Driven Decisions**: Use data to guide technical choices
-- **Automation First**: Automate repetitive quality checks
-- **Documentation Culture**: Keep documentation current and useful
-
-## Language and Style
-
-- Use New Zealand English spelling and grammar
-- Follow language-specific best practices (see language/ directory)
-- Prioritise readability and maintainability over cleverness
-- Write code that tells a story and minimises cognitive load
+- [ ] Functions are ≤50 lines and do one thing
+- [ ] Names are descriptive — no abbreviations, no single-letter variables outside loops
+- [ ] No commented-out code; no hardcoded values
+- [ ] Nesting does not exceed 3 levels
+- [ ] All errors are handled explicitly with context
+- [ ] New code has tests; existing tests still pass

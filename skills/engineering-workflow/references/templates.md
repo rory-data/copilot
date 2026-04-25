@@ -1,11 +1,20 @@
----
-description: "Detailed templates extracted from workflow specifications"
-applyTo: "**"
+# Engineering Templates
+
+## Table of Contents
+
+1. [requirements.md](#requirementsmd)
+2. [design.md](#designmd)
+3. [tasks.md](#tasksmd)
+4. [Action Documentation](#action-documentation)
+5. [Decision Record](#decision-record)
+6. [PRD (Product Requirements Document)](#prd)
+7. [User Story](#user-story)
+8. [Epic Breakdown](#epic-breakdown)
+9. [GitHub Issue (from PRD)](#github-issue)
+
 ---
 
-# Specification Templates
-
-## Requirements Template (`requirements.md`)
+## requirements.md
 
 ```markdown
 ---
@@ -90,7 +99,9 @@ owner: [Team/Individual]
 - [Future considerations]
 ```
 
-## Design Template (`design.md`)
+---
+
+## design.md
 
 ````markdown
 ---
@@ -119,7 +130,6 @@ graph TD
     A[Input] --> B[Processing]
     B --> C[Output]
 ```
-````
 
 [Description of data flow and transformations]
 
@@ -140,7 +150,6 @@ response:
 ### Data Models
 
 ```sql
--- Example database schema
 CREATE TABLE example (
     id UUID PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
@@ -164,7 +173,7 @@ CREATE TABLE example (
 ## Security Considerations
 
 - **Authentication**: [Method and implementation]
-- **Authorization**: [Permissions and access control]
+- **Authorisation**: [Permissions and access control]
 - **Data Protection**: [Encryption, PII handling]
 - **Audit Trail**: [Logging and monitoring]
 
@@ -193,12 +202,13 @@ CREATE TABLE example (
 - **Known Limitations**: [Current constraints and future improvements]
 - **Technical Debt**: [Shortcuts taken and remediation plans]
 - **Alternative Approaches**: [Options considered and why rejected]
-
 ````
 
-## Tasks Template (`tasks.md`)
+---
 
-```markdown
+## tasks.md
+
+````markdown
 ---
 title: [Project/Feature Name] Implementation Tasks
 version: 1.0
@@ -210,11 +220,14 @@ owner: [Implementation Lead]
 # [Project/Feature Name] Implementation Tasks
 
 ## Task Overview
+
 Total estimated effort: [X hours/days/weeks]
 Critical path: [Key dependencies that affect timeline]
 
 ## Phase 1: Foundation
+
 ### TASK-001: [Foundation Task Name]
+
 - **Description**: [What needs to be done]
 - **Expected Outcome**: [Specific deliverable or result]
 - **Dependencies**: [What must be completed first]
@@ -224,111 +237,327 @@ Critical path: [Key dependencies that affect timeline]
   - [ ] [Specific testable criteria]
   - [ ] [Additional criteria]
 
-### TASK-002: [Database Setup]
-- **Description**: Create database schema and initial data
-- **Expected Outcome**: Functional database with seed data
-- **Dependencies**: TASK-001 (Environment setup)
-- **Effort Estimate**: 4 hours
-- **Status**: [ ] Not Started
-- **Acceptance Criteria**:
-  - [ ] All tables created with proper constraints
-  - [ ] Seed data populated
-  - [ ] Database migrations work correctly
-
 ## Phase 2: Core Implementation
-### TASK-003: [Core Feature Implementation]
+
+### TASK-002: [Core Feature]
+
 - **Description**: [Implementation details]
 - **Expected Outcome**: [Working feature with tests]
-- **Dependencies**: TASK-001, TASK-002
-- **Effort Estimate**: [Estimate]
+- **Dependencies**: TASK-001
 - **Status**: [ ] Not Started
 - **Acceptance Criteria**:
   - [ ] [Functional criteria]
-  - [ ] [Quality criteria]
   - [ ] [Test coverage criteria]
 
 ## Phase 3: Integration & Testing
-### TASK-004: [Integration Testing]
+
+### TASK-003: [Integration Testing]
+
 - **Description**: [Integration scope and approach]
 - **Expected Outcome**: [Validated integrations]
 - **Dependencies**: [Core implementation tasks]
-- **Effort Estimate**: [Estimate]
 - **Status**: [ ] Not Started
 
 ## Phase 4: Deployment & Documentation
-### TASK-005: [Deployment Pipeline]
+
+### TASK-004: [Deployment]
+
 - **Description**: [Deployment setup and configuration]
 - **Expected Outcome**: [Automated deployment capability]
 - **Dependencies**: [Implementation completion]
-- **Effort Estimate**: [Estimate]
 
-## Risk Mitigation Tasks
+## Risk Mitigation
+
 ### TASK-RISK-001: [High-Risk Item]
+
 - **Risk**: [Description of risk]
 - **Impact**: [Consequences if risk occurs]
 - **Mitigation**: [Specific actions to reduce risk]
 - **Contingency**: [Plan if risk occurs]
 
 ## Definition of Done
+
 - [ ] All acceptance criteria met
 - [ ] Code reviewed and approved
 - [ ] Tests written and passing (>80% coverage)
 - [ ] Documentation updated
-- [ ] Security review completed (if applicable)
 - [ ] Performance requirements validated
 - [ ] Deployed to staging and validated
 - [ ] Stakeholder approval obtained
 
-## Task Dependencies Diagram
+## Task Dependencies
+
 ```mermaid
 graph TD
-    TASK001[Environment Setup] --> TASK002[Database Setup]
-    TASK001 --> TASK003[Core Implementation]
-    TASK002 --> TASK003
-    TASK003 --> TASK004[Integration Testing]
-    TASK004 --> TASK005[Deployment]
+    TASK001[Foundation] --> TASK002[Core Implementation]
+    TASK002 --> TASK003[Integration Testing]
+    TASK003 --> TASK004[Deployment]
+```
 ````
 
-## Notes and Decisions
+---
 
-- [Important notes about task planning or decisions made]
-- [Changes to original plan and rationale]
-
-````
-
-## Action Documentation Template
+## Action Documentation
 
 ```markdown
-### [TYPE] - [ACTION] - [TIMESTAMP]
+### [TYPE] — [ACTION] — [TIMESTAMP]
+
 **Objective**: [Goal being accomplished]
 **Context**: [Current state, requirements, and reference to prior steps]
-**Decision**: [Approach chosen and rationale, referencing the Decision Record if applicable]
-**Execution**: [Steps taken with parameters and commands used. For code, include file paths.]
-**Output**: [Complete and unabridged results, logs, command outputs, and metrics]
-**Validation**: [Success verification method and results. If failed, include a remediation plan.]
-**Next**: [Automatic continuation plan to the next specific action]
-````
-
-## Decision Record Template
-
-```markdown
-### Decision - [TIMESTAMP]
-
-**Decision**: [What was decided]
-**Context**: [Situation requiring decision and data driving it]
-**Options**: [Alternatives evaluated with brief pros and cons]
-**Rationale**: [Why the selected option is superior, with trade-offs explicitly stated]
-**Impact**: [Anticipated consequences for implementation, maintainability, and performance]
-**Review**: [Conditions or schedule for reassessing this decision]
+**Decision**: [Approach chosen and rationale]
+**Execution**: [Steps taken with parameters and commands used; include file paths for code changes]
+**Output**: [Complete results, logs, command outputs, and metrics]
+**Validation**: [Success verification method and results; if failed, include remediation plan]
+**Next**: [Continuation plan to the next specific action]
 ```
 
-## EARS Notation Quick Reference
+---
 
-- **Ubiquitous**: `THE SYSTEM SHALL [expected behavior]`
-- **Event-driven**: `WHEN [trigger event] THE SYSTEM SHALL [expected behavior]`
-- **State-driven**: `WHILE [in specific state] THE SYSTEM SHALL [expected behavior]`
-- **Unwanted behavior**: `IF [unwanted condition] THEN THE SYSTEM SHALL [required response]`
-- **Optional**: `WHERE [feature is included] THE SYSTEM SHALL [expected behavior]`
-- **Complex**: Combinations of the above patterns
+## Decision Record
 
-Each requirement must be: **Testable**, **Unambiguous**, **Necessary**, **Feasible**, **Traceable**
+```markdown
+### Decision — [date]: [brief title]
+
+**Decision**: What was decided
+**Context**: Situation requiring the decision and the data driving it
+**Options**: Alternatives considered with brief pros/cons
+**Rationale**: Why the chosen option is superior, with trade-offs stated explicitly
+**Impact**: Consequences for implementation, maintainability, and performance
+**Review**: Conditions or schedule for reassessing this decision
+```
+
+---
+
+## PRD
+
+```markdown
+---
+title: PRD — [Project Title]
+version: 1.0
+date_created: [YYYY-MM-DD]
+product_manager: [Name]
+stakeholders: [List of key stakeholders]
+---
+
+# PRD: [Project Title]
+
+## 1. Product Overview
+
+### 1.1 Document Title and Version
+
+- **PRD**: [Project Title]
+- **Version**: 1.0
+- **Date**: [YYYY-MM-DD]
+- **Owner**: [Product Manager Name]
+
+### 1.2 Product Summary
+
+[Brief overview in 2–3 paragraphs describing the product's purpose, target audience, and key value proposition]
+
+## 2. Goals
+
+### 2.1 Business Goals
+
+- [Specific business objective 1]
+- [Specific business objective 2]
+
+### 2.2 User Goals
+
+- [What users want to achieve]
+
+### 2.3 Non-Goals
+
+- [What this project explicitly will NOT do]
+- [Scope boundaries and excluded features]
+
+## 3. User Personas
+
+### 3.1 Key User Types
+
+- [Primary user type 1]
+- [Secondary user type 2]
+
+### 3.2 Role-Based Access
+
+- **[Role Name]**: [Permissions, capabilities, and access levels]
+
+## 4. Functional Requirements
+
+### [Feature Name] (Priority: High/Medium/Low)
+
+- [Functional requirement 1]
+- [Integration requirements]
+- [Data requirements]
+
+## 5. User Experience
+
+### 5.1 Entry Points & First-Time User Flow
+
+- [How users discover and access the product]
+- [Onboarding process and initial setup]
+
+### 5.2 Core Experience
+
+- **[Step Name]**: [Description of key user interaction]
+
+### 5.3 Advanced Features & Edge Cases
+
+- [Complex user scenarios and how they're handled]
+- [Error states and recovery processes]
+
+## 6. Narrative
+
+[Concise paragraph describing the end-to-end user journey]
+
+## 7. Success Metrics
+
+### 7.1 User-Centric Metrics
+
+- [User engagement metric] — Target: [specific value]
+- [User satisfaction metric] — Target: [specific value]
+
+### 7.2 Business Metrics
+
+- [Revenue/cost impact] — Target: [specific value]
+
+### 7.3 Technical Metrics
+
+- [Performance requirement] — Target: [specific value]
+- [Reliability requirement] — Target: [specific value]
+
+## 8. Technical Considerations
+
+### 8.1 Integration Points
+
+- [External system] — [Integration method and requirements]
+
+### 8.2 Data Storage & Privacy
+
+- [Data types and storage requirements]
+- [Privacy and compliance considerations]
+
+### 8.3 Potential Challenges
+
+- [Technical risk] — [Mitigation strategy]
+
+## 9. Milestones & Sequencing
+
+### 9.1 Project Estimate
+
+- **Size**: [Small/Medium/Large]
+- **Complexity**: [Technical complexity assessment]
+
+### 9.2 Suggested Phases
+
+- **Phase 1**: [MVP/Core features] — [Key deliverables]
+- **Phase 2**: [Enhancement features] — [Key deliverables]
+
+## 10. User Stories
+
+### 10.1 [User Story Title]
+
+- **ID**: GH-001
+- **As a** [user type], **I want** [functionality] **so that** [benefit]
+- **Acceptance Criteria**:
+  - [ ] [Specific testable criteria]
+- **Priority**: High/Medium/Low
+
+## Appendices
+
+### A. Wireframes and Mockups
+
+[References to design documents]
+
+### B. Glossary
+
+[Definition of domain-specific terms]
+```
+
+---
+
+## User Story
+
+```markdown
+### [Story ID]: [Descriptive Title]
+
+**As a** [type of user]
+**I want** [some functionality]
+**So that** [some benefit is achieved]
+
+**Acceptance Criteria:**
+
+- [ ] Given [context/precondition], when [action], then [expected outcome]
+- [ ] Given [context/precondition], when [action], then [expected outcome]
+
+**Priority:** [High/Medium/Low]
+**Story Points:** [If using story point estimation]
+**Dependencies:** [Other stories this depends on]
+**Notes:** [Additional context or considerations]
+```
+
+---
+
+## Epic Breakdown
+
+```markdown
+# Epic: [Epic Name]
+
+## Overview
+
+[Brief description of the epic and its business value]
+
+## Success Criteria
+
+- [ ] [Measurable outcome 1]
+- [ ] [Measurable outcome 2]
+
+## User Stories in This Epic
+
+### Theme 1: [Group of related stories]
+
+- **GH-001**: [Story title] — [Priority]
+- **GH-002**: [Story title] — [Priority]
+
+## Dependencies
+
+- [External dependency 1]
+
+## Risks & Mitigation
+
+- **Risk**: [Description] — **Mitigation**: [Strategy]
+```
+
+---
+
+## GitHub Issue
+
+```markdown
+---
+name: User Story
+about: User story generated from PRD
+labels: user-story, needs-refinement
+---
+
+## User Story
+
+**As a** [user type]
+**I want** [functionality]
+**So that** [benefit]
+
+## Acceptance Criteria
+
+- [ ] [Testable criteria 1]
+- [ ] [Testable criteria 2]
+
+## Definition of Done
+
+- [ ] Acceptance criteria met
+- [ ] Code reviewed and approved
+- [ ] Tests written and passing
+- [ ] Documentation updated
+
+## Related Issues
+
+- Related to: #[issue-number]
+- Blocks: #[issue-number]
+```
