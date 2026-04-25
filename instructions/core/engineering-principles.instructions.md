@@ -1,5 +1,5 @@
 ---
-description: "Shared engineering fundamentals, design patterns, and quality principles"
+description: "Shared engineering fundamentals and quality principles (SOLID, DRY, YAGNI). For Gang of Four design patterns, invoke the gang-of-four skill."
 applyTo: "**"
 ---
 

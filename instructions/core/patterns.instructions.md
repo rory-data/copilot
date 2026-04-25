@@ -1,11 +1,12 @@
 ---
-description: "Common design patterns for API responses, repository abstraction, and utilities"
+description: "Common utility patterns for API responses, repository abstraction, and utilities. For Gang of Four design patterns (Factory, Observer, Strategy, Decorator, etc.), invoke the gang-of-four skill."
 applyTo: "**"
 ---
 
 # Common Patterns
 
-> Code examples use Python for illustration. For Python-specific patterns, invoke the python-conventions skill.
+> For GoF design patterns (creational, structural, behavioural), invoke the **gang-of-four** skill.
+> Code examples use Python for illustration. For Python-specific conventions, invoke the python-conventions skill.
 
 ## API Response Format
 
