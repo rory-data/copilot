@@ -15,7 +15,10 @@
 !skills/
 !skills/**
 
-# exclude .DS_Store from whitelisted directories
+# exclude junk folders from whitelisted directories
 instructions/**/.DS_Store
 prompts/**/.DS_Store
 skills/**/.DS_Store
+instructions/**/__pycache__/
+prompts/**/__pycache__/
+skills/**/__pycache__/

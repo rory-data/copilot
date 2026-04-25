@@ -1,0 +1,53 @@
+{
+  "skill_name": "instructions-builder",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I'm starting a new Python FastAPI project and want Copilot to know our conventions. We use Pydantic v2 for all request/response models, SQLAlchemy 2.0 with async sessions for the database, Ruff for linting, and pytest with httpx for testing. We always put API route handlers in src/api/, database models in src/models/, and business logic in src/services/. Can you create instruction files for this project?",
+      "expected_output": "Multiple instruction files created: at minimum a Python-scoped file for language conventions, a testing file, and ideally a domain file for the FastAPI/service architecture. All files should have correct YAML frontmatter with applyTo scoped appropriately (e.g., **/*.py for Python rules). Content should be concrete and verifiable, not vague principles.",
+      "files": [],
+      "assertions": [
+        "At least 2 instruction files are created",
+        "Every created file has YAML frontmatter with both description and applyTo fields",
+        "At least one instruction file has applyTo scoped to Python files (e.g., **/*.py) rather than **",
+        "Pydantic v2 is mentioned specifically (not just Pydantic in general)",
+        "SQLAlchemy 2.0 or async sessions are mentioned",
+        "Ruff is mentioned for linting",
+        "The project directory structure (src/api/, src/models/, src/services/) is captured in at least one file",
+        "No file exceeds 150 lines"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "I have some coding rules I want to add to my Copilot instructions. Here they are:\n\n1. Always use TypeScript strict mode\n2. Use Zod for runtime validation of all external data (API responses, form inputs, env vars)\n3. Prefer named exports over default exports\n4. Use React Query (TanStack Query) for all server state - no useState for async data\n5. Components live in src/components/, pages in src/pages/, hooks in src/hooks/\n6. Write unit tests with Vitest, E2E tests with Playwright\n7. Use CSS modules for component styling, no inline styles\n8. API calls go through a central src/lib/api.ts client, never fetch directly in components\n\nPlease create well-organised instruction files for these.",
+      "expected_output": "Rules are split into logical topic files (e.g., TypeScript conventions, testing, React/component patterns). TypeScript/React rules should be scoped to the appropriate file types. Rules should be concrete and actionable. Directory conventions should be included.",
+      "files": [],
+      "assertions": [
+        "At least 2 instruction files are created (rules cover multiple distinct topics)",
+        "Every file has correct YAML frontmatter with both description and applyTo fields",
+        "TypeScript/React rules are scoped to .ts or .tsx files (applyTo is not just '**')",
+        "Zod validation rule is present and specific",
+        "React Query / TanStack Query rule is present",
+        "Testing section distinguishes Vitest (unit) from Playwright (E2E)",
+        "The directory structure (src/components/, src/pages/, src/hooks/) is captured",
+        "No file exceeds 150 lines"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "I want to convert these Claude Code rules files into Copilot instructions. Here's the content from my .claude/rules/security.md:\n\n---\npaths:\n  - \"**\"\n---\n\n# Security\n\n- Never hardcode secrets. Use environment variables via os.environ\n- Always parameterize SQL queries — never use f-strings or .format() to build SQL\n- Validate and sanitize all user input before use\n- Include .env in .gitignore; never commit it\n- Use httpx with timeout set for all external HTTP calls\n- Log security events (failed auth, invalid input) but never log sensitive data\n\nAnd this from .claude/rules/python-style.md:\n\n---\npaths:\n  - \"**/*.py\"\n---\n\n# Python Style\n\n- Use type hints on all function signatures\n- Use dataclasses or Pydantic for structured data — no plain dicts for domain objects\n- Max function length: 40 lines\n- Use pathlib.Path, not os.path\n- Format with black, lint with ruff\n\nConvert these to Copilot instruction format.",
+      "expected_output": "Two instruction files created, faithfully converting the source content. Security file should have applyTo: '**' (global). Python style file should have applyTo: '**/*.py'. Content should preserve all original rules, with paths frontmatter replaced by applyTo frontmatter.",
+      "files": [],
+      "assertions": [
+        "Exactly 2 instruction files are created (one security, one python-style)",
+        "Security file has applyTo: '**' or equivalent global scope",
+        "Python style file has applyTo scoped to Python files (e.g., **/*.py)",
+        "Security file preserves the parameterized SQL / no f-strings for SQL rule",
+        "Security file preserves the httpx with timeout rule",
+        "Python style file preserves the pathlib.Path rule",
+        "Python style file preserves the 40-line max function length",
+        "Both files have description fields in their frontmatter"
+      ]
+    }
+  ]
+}

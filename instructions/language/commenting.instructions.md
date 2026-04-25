@@ -7,7 +7,7 @@ applyTo: "**"
 
 Write code that speaks for itself. Comment only to explain **why**, not what.
 
-## ❌ Avoid These Comment Types
+## Avoid These Comment Types
 
 **Obvious comments:**
 
@@ -33,7 +33,7 @@ def get_user_name(user):
 tax = price * 0.08  # Actually 8%
 ```
 
-## ✅ Write These Comment Types
+## Write These Comment Types
 
 **Complex business logic:**
 

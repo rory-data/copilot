@@ -95,34 +95,3 @@ Build only what is explicitly needed — do not anticipate requirements. Prefer 
 ## Function Size
 
 Keep functions small and focused: 50 lines maximum, one level of abstraction per function, no nesting deeper than 3 levels.
-
-## Testing
-
-Test pyramid: **70% unit, 20% integration, 10% end-to-end.** Target 80% coverage with meaningful assertions, not padding.
-
-Structure tests with AAA — Arrange, Act, Assert:
-
-```python
-def test_discount_applies_to_premium_orders():
-    # Arrange
-    order = Order(total=200.0, customer_tier="premium")
-
-    # Act
-    discount = calculate_discount(order)
-
-    # Assert
-    assert discount == 20.0
-```
-
-Test behaviour, not implementation. Test boundary conditions and error paths.
-
-## Code Quality Checklist
-
-Before committing:
-
-- [ ] Functions are ≤50 lines and do one thing
-- [ ] Names are descriptive — no abbreviations, no single-letter variables outside loops
-- [ ] No commented-out code; no hardcoded values
-- [ ] Nesting does not exceed 3 levels
-- [ ] All errors are handled explicitly with context
-- [ ] New code has tests; existing tests still pass
