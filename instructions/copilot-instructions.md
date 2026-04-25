@@ -1,6 +1,6 @@
 ---
 applyTo: "**"
-description: "Core behavioral rules and interaction principles for GitHub Copilot."
+description: "Core behavioural rules and interaction principles for GitHub Copilot and Copilot CLI."
 ---
 
 # GitHub Copilot
