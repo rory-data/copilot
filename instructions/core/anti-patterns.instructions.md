@@ -11,6 +11,16 @@ applyTo: "**"
 - If unsure whether a module or function exists, check `requirements.txt`, `pyproject.toml`, or equivalent first.
 - Never invent import paths. Always verify with `find` or `grep` before importing.
 
+## Grounded Claims
+
+When asserting risks, failure modes, or trade-offs:
+
+- Anchor the claim in a specific, verifiable source (postmortem, canonical reference, widely cited
+  incident) when one exists
+- If no strong source exists, frame the claim explicitly as experiential: "in practice…" or "a
+  common failure mode is…"
+- Do not present vague warnings as established fact
+
 ## Scope Discipline
 
 - Implement ONLY what was explicitly requested.
