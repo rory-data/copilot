@@ -1,6 +1,6 @@
 ---
 name: code-smell-detector
-description: Detects and fixes common code smells during review or refactoring. Invoke whenever reviewing code for quality issues, before merging a PR, when refactoring legacy code, or when the user asks about code quality, anti-patterns, or technical debt. Detects: over-abstraction, complex inheritance, large functions, tight coupling, hidden dependencies, magic numbers, boolean traps, swallowed exceptions, global state, and duplicate code. Provides specific fixes with before/after examples. Also invoke when someone says "review this code", "is this clean?", "can I improve this?", "this feels messy", or "find problems in my code".
+description: 'Detects and fixes common code smells during review or refactoring. Invoke whenever reviewing code for quality issues, before merging a PR, when refactoring legacy code, or when the user asks about code quality, anti-patterns, or technical debt. Detects: over-abstraction, complex inheritance, large functions, tight coupling, hidden dependencies, magic numbers, boolean traps, swallowed exceptions, global state, and duplicate code. Provides specific fixes with before/after examples. Also invoke when someone says "review this code", "is this clean?", "can I improve this?", "this feels messy", or "find problems in my code".'
 ---
 
 # Code Smell Detector
