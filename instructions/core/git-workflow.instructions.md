@@ -11,11 +11,7 @@ applyTo: "**"
 <type>: <description>
 
 <optional body>
-
-Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>
 ```
-
-Types: `feat`, `fix`, `refactor`, `docs`, `test`, `chore`, `perf`, `ci`
 
 ## Pull Request Workflow
 

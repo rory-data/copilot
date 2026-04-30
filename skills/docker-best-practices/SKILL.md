@@ -1,6 +1,6 @@
 ---
 name: docker-best-practices
-description: Docker and container image best practices including multi-stage builds, security hardening, layer optimization, and Alpine/slim variants. Use when writing or reviewing Dockerfiles, container configurations, or docker-compose files.
+description: Docker and container image best practices including multi-stage builds, security hardening, layer optimisation, and Alpine/slim variants. Use when writing or reviewing Dockerfiles, container configurations, or docker-compose files. Also invoke when someone asks about containerising an application, reducing image size, running as non-root, pinning base image versions, health checks, or setting up Docker for development vs production — even if they don't explicitly mention "best practices".
 license: Proprietary. See parent repository LICENSE
 ---
 
@@ -191,7 +191,7 @@ services:
 
 ## Common Anti-Patterns to Avoid
 
-❌ **Don't do this:**
+**Avoid:**
 
 ```dockerfile
 FROM ubuntu:latest                    # Use specific versions
@@ -201,7 +201,7 @@ RUN apt-get install -y curl         # Separate command
 ADD https://example.com/file.tar.gz  # Use COPY + RUN
 ```
 
-✅ **Do this instead:**
+**Prefer:**
 
 ```dockerfile
 FROM ubuntu:20.04

@@ -17,5 +17,6 @@
   "model": "claude-sonnet-4.6",
   "skill_directories": [
     "/Users/rory/.copilot/skills/astronomer"
-  ]
+  ],
+  "continueOnAutoMode": true
 }

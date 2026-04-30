@@ -1,6 +1,6 @@
 ---
 name: markdown-conventions
-description: Documentation and content creation standards for Markdown files. Use when writing, reviewing, or formatting Markdown documentation, README files, or technical content.
+description: Documentation and content creation standards for Markdown files. Use when writing, reviewing, or formatting Markdown documentation, README files, READMEs, changelogs, or any technical content. Also invoke when someone asks about Markdown formatting, heading structure, code blocks, link text, table formatting, or NZ English spelling in documents — even if they don't explicitly ask for "Markdown standards".
 license: Proprietary. See parent repository LICENSE
 ---
 
@@ -8,7 +8,7 @@ license: Proprietary. See parent repository LICENSE
 
 ## Quick Reference
 
-- **Heading levels**: H2-H3 for structure (H1 auto-generated from title)
+- **H1 (`#`)**: Reserved for document titles only; use H2+ for content sections
 - **Line length**: 400 characters max for readability
 - **Language**: New Zealand English spelling and grammar
 - **Code blocks**: Use fenced blocks with language specification
@@ -20,7 +20,7 @@ license: Proprietary. See parent repository LICENSE
 
 - Use `##` for H2 and `###` for H3
 - Ensure hierarchical structure (don't skip levels)
-- **Do not use H1** (`#`) - auto-generated from title
+- **H1 is for document titles only** — use H2 (`##`) and H3 (`###`) for content sections
 - Recommend restructuring if content requires H4
 - Strongly recommend restructuring for H5+
 
@@ -258,7 +258,7 @@ Links to related resources.
 Before finalizing documentation:
 
 - [ ] Headings follow hierarchical structure (H2 → H3)
-- [ ] No H1 headings (auto-generated from title)
+- [ ] H1 used only for the document title (not for content sections)
 - [ ] Code blocks specify language
 - [ ] Links use descriptive text
 - [ ] Images include alt text
@@ -270,7 +270,7 @@ Before finalizing documentation:
 
 ## Anti-Patterns to Avoid
 
-❌ **Don't do this:**
+**Avoid:**
 
 ```markdown
 # Using H1 in content (H1 is for title only)
@@ -285,7 +285,7 @@ code here
 ![](image.png) # No alt text
 ```
 
-✅ **Do this instead:**
+**Prefer:**
 
 ```markdown
 ## Using H2 for Main Sections
