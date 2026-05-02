@@ -11,12 +11,7 @@
       "login": "rory-data"
     }
   ],
-  "trusted_folders": [
-    "/Users/rory"
-  ],
+  "trusted_folders": ["/Users/rory"],
   "model": "claude-sonnet-4.6",
-  "skill_directories": [
-    "/Users/rory/.copilot/skills/astronomer"
-  ],
   "continueOnAutoMode": true
 }

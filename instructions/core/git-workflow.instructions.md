@@ -7,11 +7,68 @@ applyTo: "**"
 
 ## Commit Message Format
 
+Use [Conventional Commits](https://www.conventionalcommits.org/) format strictly:
+
 ```
-<type>: <description>
+<type>(<scope>): <subject>
 
 <optional body>
 ```
+
+Common types: `feat`, `fix`, `refactor`, `chore`, `docs`, `test`, `perf`
+
+```
+feat(ingestion): add Iceberg write path for bronze layer
+fix(dag_release_audit): handle missing feature flag key gracefully
+refactor(cli): extract argument parsing into dedicated module
+chore: bump polars to 1.x
+```
+
+Subject line rules:
+- Imperative mood — "add" not "added"
+- 72 characters maximum
+- No trailing period
+- The body (separated by a blank line) explains _why_, not _what_ — the diff shows what
+
+## Commit Atomicity
+
+A commit should represent one logical change — independently reviewable, independently revertable,
+and independently deployable.
+
+The practical test: if the commit message requires the word "and" to be accurate, the commit likely
+bundles two changes. Examples:
+
+- Refactoring a function and fixing a bug in it → two commits
+- Adding a new pipeline stage with its tests → one commit (logically coupled)
+- Updating a dependency and fixing the downstream breakage → one commit (change and required consequence)
+
+Tests belong in the same commit as the behaviour they cover. A commit adding behaviour followed by
+a commit adding tests is almost always the wrong split.
+
+## Commit Granularity
+
+The right unit is a **coherent behaviour**, not a code structure boundary. Method-per-commit is
+too granular — intermediate commits represent incomplete, broken code with no independent value.
+
+Natural boundaries when building a module:
+
+1. Scaffold — module file, class definition, `__init__` imports, nothing implemented
+2. Each meaningful capability with its tests
+3. Substantial error handling or edge cases, if worth isolating
+4. Integration wiring — connecting the module into the broader system
+
+## Staging Discipline
+
+Use `git add -p` (patch mode) rather than `git add .`. Patch mode forces a review of exactly what
+is being committed and makes atomic commits achievable even when multiple changes were made in one
+editing session.
+
+## Commit Size
+
+No hard line on diff size, but a useful heuristic: if a reviewer cannot meaningfully review it in
+a single sitting, it is too large. For broad refactors, prefer a series of preparatory commits
+(rename, extract, move) followed by the substantive change. This keeps individual commits
+reviewable and makes `git bisect` tractable when tracking down regressions.
 
 ## Pull Request Workflow
 
@@ -53,7 +110,5 @@ dimensions that complement it.
 
 ### 3. Commit and Push
 
-- Write detailed commit messages following the format above
-- Use conventional commits format consistently
-- Atomic commits — one logical change per commit
+- Follow the commit message format and atomicity rules above
 - Commit immediately upon task completion; do not batch across features
