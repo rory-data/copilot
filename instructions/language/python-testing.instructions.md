@@ -1,5 +1,5 @@
 ---
-description: "Python testing standards: pytest conventions, what to test, and what not to generate"
+description: "Python testing standards: pytest conventions, test scope (only project code — not third-party libs or external systems), and what not to generate"
 applyTo: "**/*.py"
 ---
 
@@ -97,3 +97,50 @@ def test_creates_user_with_normalised_name(mocker) -> None:
     saved = mock_save.call_args[0][0]
     assert saved.name == "alice"
 ```
+
+## Test Scope
+
+Tests must only cover the behaviour of the project's own implemented code. Do not write tests
+that verify the correctness of external systems or third-party libraries — those are tested by
+their authors. Every test must be value-add: it must fail when your code has a bug, and pass
+when it does not.
+
+**Do not test external systems directly.** Always mock at the system boundary (database, HTTP
+API, message queue, filesystem). A test that exercises a real database is not a unit test — it
+is an integration test of the database driver, the schema, and your code simultaneously. Keep
+those concerns separate.
+
+**Do not test third-party library behaviour.** If you call `json.dumps`, `pendulum.now`, or a
+Pydantic validator, do not write a test that simply confirms the library works. Write tests that
+confirm your code passes the right inputs and handles the outputs correctly.
+
+```python
+# WRONG: tests that pandas can read a CSV (not your code)
+def test_load_data() -> None:
+    df = pd.read_csv("data/sample.csv")
+    assert len(df) > 0  # verifies pandas, not your logic
+
+# CORRECT: tests your transformation logic on controlled input
+def test_normalise_column_names() -> None:
+    df = pd.DataFrame({"First Name": ["Alice"], "Last Name": ["Smith"]})
+    result = normalise_column_names(df)
+    assert list(result.columns) == ["first_name", "last_name"]
+```
+
+```python
+# WRONG: tests that requests.get works (not your code)
+def test_fetches_user(mocker) -> None:
+    mocker.patch("requests.get", return_value=Mock(status_code=200))
+    fetch_user(1)
+    # no assertion on YOUR code's output
+
+# CORRECT: tests your parsing logic with a controlled response
+def test_fetch_user_parses_name(mocker) -> None:
+    mocker.patch("myapp.client.get", return_value={"id": 1, "name": "Alice"})
+    user = fetch_user(1)
+    assert user.name == "Alice"
+```
+
+**The value-add test:** Before writing a test, ask: "If I introduced a bug in my code, would
+this test catch it?" If the answer is no — because it only exercises library plumbing or an
+external service — delete the test or rewrite it to assert on your code's actual output.
