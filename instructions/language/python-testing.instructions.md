@@ -82,6 +82,18 @@ def test_transform_raises_on_empty_dataframe() -> None:
 
 - Do not mock the function under test itself
 - Do not write assertions that only verify a mock was called — verify the actual output
+- Always pass `spec=` (or `spec_set=`) when creating mocks — this ensures the mock mirrors the
+  real object's interface and catches calls to attributes or methods that don't exist on it
+
+```python
+# WRONG: unspecced mock silently accepts any attribute access
+mock_client = mocker.MagicMock()
+mock_client.ftech_user(1)  # typo — passes silently, hides a bug
+
+# CORRECT: spec catches invalid attribute access at test time
+mock_client = mocker.MagicMock(spec=HttpClient)
+mock_client.ftech_user(1)  # raises AttributeError immediately
+```
 
 ```python
 # WRONG: only verifies the call, not the behaviour
@@ -105,10 +117,11 @@ that verify the correctness of external systems or third-party libraries — tho
 their authors. Every test must be value-add: it must fail when your code has a bug, and pass
 when it does not.
 
-**Do not test external systems directly.** Always mock at the system boundary (database, HTTP
-API, message queue, filesystem). A test that exercises a real database is not a unit test — it
-is an integration test of the database driver, the schema, and your code simultaneously. Keep
-those concerns separate.
+**Do not test external system behaviour.** Integration tests may connect to real external systems
+(databases, HTTP APIs, message queues) to verify your code's interaction with them, but the test
+must still assert on *your code's output*, not on how the external system works internally. A
+test that only confirms Oracle can persist a row is testing Oracle, not your code. Mark
+integration tests with `@pytest.mark.integration` and keep them separate from unit tests.
 
 **Do not test third-party library behaviour.** If you call `json.dumps`, `pendulum.now`, or a
 Pydantic validator, do not write a test that simply confirms the library works. Write tests that
