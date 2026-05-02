@@ -23,6 +23,19 @@ When creating PRs:
 4. Include a test plan with specific scenarios to verify
 5. Push with `-u` flag if the branch is new
 
+## Pre-PR Quality Checks
+
+Run these against the full branch diff (`git diff <base-branch>...HEAD`) before opening a PR.
+`roborev` handles general code review automatically post-commit; these checks cover specialised
+dimensions that complement it.
+
+- **Code smells**: invoke `code-smell-detector` on changed source files. Fix Critical and Major
+  findings before opening the PR.
+- **Comment quality**: invoke `comment-reviewer` on any files where comments or docstrings were
+  added or modified. Fix Critical issues; address Rot Risk items where practical.
+- **Silent failures**: if catch blocks or fallback logic were added, apply the 5-question cascade
+  from `code-smell-detector` Smell #8.
+
 ## Feature Implementation Workflow
 
 ### 1. Plan First
@@ -38,13 +51,7 @@ When creating PRs:
 - Refactor (IMPROVE)
 - Verify 80%+ coverage
 
-### 3. Code Review
-
-- Request review after writing code
-- Address CRITICAL and HIGH issues before merging
-- Fix MEDIUM issues when possible within scope
-
-### 4. Commit and Push
+### 3. Commit and Push
 
 - Write detailed commit messages following the format above
 - Use conventional commits format consistently
