@@ -303,6 +303,26 @@ def load_config(path: str) -> dict:
         raise ConfigError(f"Invalid JSON in {path}: {exc}") from exc
 ```
 
+**Deep analysis — ask these questions for every catch block:**
+
+1. **Specificity**: Is only the expected exception type caught? List every *unrelated* exception
+   this block could silently swallow (e.g., a broad `except Exception` around file I/O also
+   catches `KeyboardInterrupt`, `MemoryError`, and any bug in the code inside the try block).
+
+2. **Logging quality**: Is the error logged with enough context to debug it six months from now?
+   A bare `logger.error("Failed")` is nearly useless — it needs the operation name, relevant IDs,
+   and the original exception.
+
+3. **Fallback justification**: If the catch block returns a default value or falls back to
+   alternative behaviour, is that fallback explicitly required and documented, or is it masking
+   a real problem the caller should know about?
+
+4. **Propagation**: Should this error propagate to a higher-level handler instead of being caught
+   here? Catching too low obscures the call chain and prevents proper cleanup.
+
+5. **User impact**: If this error silently succeeds, what will the user experience? Corrupted
+   state? Stale data? A success response on an operation that actually failed?
+
 > Cross-reference: `instructions/core/engineering-principles.instructions.md` (Error Handling).
 
 ---

@@ -56,6 +56,20 @@ def test_discount_applies_to_premium_orders() -> None:
     assert discount == 20.0
 ```
 
+## Test Quality
+
+**Test behaviour, not implementation.** A test that breaks when you rename an internal variable
+but keep the external behaviour the same is testing the wrong thing. Ask: "Would this test still
+fail if a regression was introduced?" If no — it provides no safety.
+
+**DAMP over DRY for tests**: Tests should be Descriptive and Meaningful Phrases. Prefer slightly
+repetitive, self-contained test bodies over heavy fixture abstraction that forces readers to jump
+around to understand a test. Test clarity matters more than deduplication.
+
+**Check for brittleness**: Tests tightly coupled to implementation details (mocking private
+methods, asserting on exact internal call counts for non-contract behaviour) will break on every
+refactor. They create churn, not safety.
+
 ## Test Isolation
 
 - Each test must be independent — no shared mutable state between tests
