@@ -10,77 +10,23 @@ applyTo: "**"
 
 ## API Response Format
 
-Use a consistent envelope for all API responses:
-
-```python
-from typing import Generic, TypeVar
-from dataclasses import dataclass, field
-
-T = TypeVar("T")
-
-@dataclass
-class Meta:
-    total: int
-    page: int
-    limit: int
-
-@dataclass
-class ApiResponse(Generic[T]):
-    success: bool
-    data: T | None = None
-    error: str | None = None
-    meta: Meta | None = None
-```
+Use a consistent response envelope for all API responses with these fields: `success` (bool),
+`data` (nullable payload), `error` (nullable message), and optional `meta` (pagination: `total`,
+`page`, `limit`). For Python implementations see the `python-conventions` skill.
 
 ## Repository Pattern
 
-Abstract data access behind a typed interface:
-
-```python
-from abc import ABC, abstractmethod
-from typing import Generic, TypeVar
-
-T = TypeVar("T")
-
-class Repository(ABC, Generic[T]):
-    @abstractmethod
-    async def find_all(self, filters: dict | None = None) -> list[T]: ...
-
-    @abstractmethod
-    async def find_by_id(self, id: str) -> T | None: ...
-
-    @abstractmethod
-    async def create(self, data: dict) -> T: ...
-
-    @abstractmethod
-    async def update(self, id: str, data: dict) -> T: ...
-
-    @abstractmethod
-    async def delete(self, id: str) -> None: ...
-```
+Abstract data access behind a typed interface with these operations: `find_all(filters)`,
+`find_by_id(id)`, `create(data)`, `update(id, data)`, `delete(id)`. Inject the repository as a
+dependency — never instantiate it directly. For Python implementations see the `python-conventions`
+skill.
 
 ## Debounce / Throttle Utility
 
-```python
-import asyncio
-from collections.abc import Callable
-from typing import Any
-
-def debounce(delay: float) -> Callable:
-    """Return a decorator that debounces a coroutine by `delay` seconds."""
-    def decorator(fn: Callable) -> Callable:
-        task: asyncio.Task | None = None
-
-        async def wrapper(*args: Any, **kwargs: Any) -> None:
-            nonlocal task
-            if task is not None:
-                task.cancel()
-            await asyncio.sleep(delay)
-            await fn(*args, **kwargs)
-
-        return wrapper
-    return decorator
-```
+A debounce utility cancels any pending invocation when called again within the delay window,
+then executes after the delay elapses. Use for search inputs, resize handlers, and any event that
+fires faster than you need to react. For Python async implementations see the `python-conventions`
+skill.
 
 ## Skeleton Projects
 

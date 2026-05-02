@@ -9,32 +9,10 @@ applyTo: "**"
 
 ## Immutability (CRITICAL)
 
-ALWAYS create new objects, NEVER mutate in place:
-
-```python
-# WRONG: Mutation
-def update_user(user: dict, name: str) -> dict:
-    user["name"] = name  # MUTATION!
-    return user
-
-# CORRECT: Immutability
-def update_user(user: dict, name: str) -> dict:
-    return {**user, "name": name}
-```
-
-For dataclasses, use `dataclasses.replace`:
-
-```python
-from dataclasses import dataclass, replace
-
-@dataclass(frozen=True)
-class User:
-    id: int
-    name: str
-
-def update_user(user: User, name: str) -> User:
-    return replace(user, name=name)
-```
+ALWAYS create new objects, NEVER mutate in place. Every state change returns a new value; the
+original is unchanged. This eliminates a whole class of bugs from shared mutable state and makes
+behaviour easier to reason about. For Python implementations (`{**obj, "key": value}`,
+`dataclasses.replace`) see the `python-conventions` skill.
 
 ## File Organisation
 
@@ -47,45 +25,15 @@ MANY SMALL FILES > FEW LARGE FILES:
 
 ## Error Handling
 
-ALWAYS handle errors comprehensively:
-
-```python
-import logging
-
-logger = logging.getLogger(__name__)
-
-async def risky_operation() -> dict:
-    ...
-
-async def process() -> dict:
-    try:
-        result = await risky_operation()
-        return result
-    except ValueError as exc:
-        logger.error("Operation failed: %s", exc)
-        raise RuntimeError("Detailed user-friendly message") from exc
-```
+ALWAYS handle errors comprehensively. Catch specific exception types, log with context, and
+re-raise as a domain-appropriate error using `raise ... from exc` to preserve the chain.
+Never swallow exceptions silently. For Python implementations see the `python-conventions` skill.
 
 ## Input Validation
 
-ALWAYS validate user input. Use Pydantic for structured data:
-
-```python
-from pydantic import BaseModel, EmailStr, field_validator
-
-class UserInput(BaseModel):
-    email: EmailStr
-    age: int
-
-    @field_validator("age")
-    @classmethod
-    def age_must_be_valid(cls, v: int) -> int:
-        if not 0 <= v <= 150:
-            raise ValueError("Age must be between 0 and 150")
-        return v
-
-validated = UserInput.model_validate(raw_input)
-```
+ALWAYS validate user input at trust boundaries. Reject invalid data as early as possible with
+clear, specific error messages. For Python, use Pydantic with field validators — see the
+`python-conventions` skill for implementation patterns.
 
 ## Code Quality Checklist
 

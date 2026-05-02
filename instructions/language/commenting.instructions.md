@@ -1,6 +1,6 @@
 ---
 description: "Guidelines for GitHub Copilot to write comments to achieve self-explanatory code with less comments."
-applyTo: "**"
+applyTo: "**/*.py"
 ---
 
 # Code Commenting

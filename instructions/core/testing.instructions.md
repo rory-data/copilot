@@ -17,12 +17,15 @@ All three test types are required:
 
 MANDATORY workflow for new features and bug fixes:
 
-1. Write the test first (RED — it should fail)
-2. **Run the test and confirm it fails** — never skip this step. A test that passes immediately proves nothing; it may be testing the wrong thing or testing existing behaviour.
-3. Write the **minimal** implementation to pass (GREEN) — do not add features beyond what the test requires
-4. Run the test and confirm it passes
-5. Refactor while keeping tests green (IMPROVE)
-6. Verify coverage remains at 80%+
+1. Confirm the behavioural specification before writing any code
+2. Write the test first (RED — it should fail) — commit as `test(scope): add tests for <behaviour>`
+3. **Run the test and confirm it fails** — never skip this step. A test that passes immediately proves nothing; it may be testing the wrong thing or testing existing behaviour.
+4. Write the **minimal** implementation to pass (GREEN) — do not add features beyond what the test requires — commit as `feat(scope): implement <behaviour>`
+5. Run the test and confirm it passes
+6. Refactor while keeping tests green (IMPROVE) — commit as `refactor(scope): <what changed and why>`
+7. Verify coverage remains at 80%+
+
+Tests and implementation go in **separate commits**, in that order. Do not collapse them into one commit — the test commit is the audit trail of intent.
 
 **If code was written before the test:** delete it. Do not keep it as "reference" or "adapt" it while writing tests — that is still writing tests after the fact. Start over from a failing test.
 
@@ -38,23 +41,12 @@ MANDATORY workflow for new features and bug fixes:
 
 ## Test Structure (AAA)
 
-Structure every test with Arrange, Act, Assert:
+Structure every test with Arrange, Act, Assert. Each section should be visually distinct —
+separate them with a blank line or inline comment in longer tests:
 
-```python
-import pytest
-from myapp.discounts import calculate_discount
-from myapp.models import Order
-
-def test_discount_applies_to_premium_orders() -> None:
-    # Arrange
-    order = Order(total=200.0, customer_tier="premium")
-
-    # Act
-    discount = calculate_discount(order)
-
-    # Assert
-    assert discount == 20.0
-```
+- **Arrange**: Set up test data and preconditions
+- **Act**: Execute the code under test
+- **Assert**: Verify the results
 
 ## Test Quality
 
@@ -73,19 +65,8 @@ refactor. They create churn, not safety.
 ## Test Isolation
 
 - Each test must be independent — no shared mutable state between tests
-- Use fixtures (`@pytest.fixture`) for setup and teardown
+- Use fixtures for setup and teardown
 - Mock external dependencies (databases, HTTP calls, filesystems)
-
-```python
-from unittest.mock import AsyncMock, patch
-import pytest
-
-@pytest.fixture
-def mock_db():
-    with patch("myapp.repository.get_db") as mock:
-        mock.return_value = AsyncMock()
-        yield mock
-```
 
 ## Troubleshooting Test Failures
 
@@ -96,9 +77,6 @@ def mock_db():
 
 ## Coverage Configuration
 
-Configure `pytest` with coverage in `pyproject.toml`:
+Configure coverage to fail below 80% and report missing lines. For pytest configuration see the
+`python-testing-patterns` skill or `language/python-testing.instructions.md`.
 
-```toml
-[tool.pytest.ini_options]
-addopts = "--cov=src --cov-report=term-missing --cov-fail-under=80"
-```

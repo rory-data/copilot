@@ -124,21 +124,19 @@ def test_email_validation(email, expected):
     assert is_valid(email) == expected
 ```
 
-### Pattern 4: Mocking with unittest.mock
+### Pattern 4: Mocking with pytest-mock
 
 ```python
 # test_api_client.py
 import pytest
-from unittest.mock import Mock, patch
 
-def test_api_call():
+def test_api_call(mocker):
     """Test API call with mock."""
-    mock_response = Mock()
-    mock_response.json.return_value = {"id": 1}
+    mock_get = mocker.patch("requests.get")
+    mock_get.return_value.json.return_value = {"id": 1}
 
-    with patch("requests.get", return_value=mock_response):
-        result = get_user(1)
-        assert result["id"] == 1
+    result = get_user(1)
+    assert result["id"] == 1
 ```
 
 ### Pattern 5: Testing Exceptions
@@ -214,7 +212,7 @@ def test_database_integration():
 
 ## Best Practices Summary
 
-1. **Write tests first** (TDD) or alongside code
+1. **Write tests first** (TDD) — failing test before any implementation
 2. **One assertion per test** when possible
 3. **Use descriptive test names** that explain behaviour
 4. **Keep tests independent** and isolated
@@ -228,7 +226,7 @@ def test_database_integration():
 ## Quick Reference
 
 - **pytest documentation**: https://docs.pytest.org/
-- **unittest.mock**: https://docs.python.org/3/library/unittest.mock.html
+- **unittest.mock**: Python standard library mocking (avoid — use `pytest-mock` instead)
 - **hypothesis**: Property-based testing library
 - **pytest-asyncio**: Testing async code
 - **pytest-cov**: Coverage measurement and reporting

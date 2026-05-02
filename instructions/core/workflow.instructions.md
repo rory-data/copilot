@@ -19,6 +19,12 @@ complex tasks in that domain:
 | `docker-best-practices` | Container image quality | Writing or reviewing Dockerfiles |
 | `markdown-conventions` | Documentation standards | Writing or reviewing Markdown files |
 | `principal-data-engineer` | Data platform architecture | Pipeline design, data quality |
+| `gang-of-four` | Design patterns | Factory, Observer, Strategy, Decorator and other GoF patterns |
+| `code-smell-detector` | Code quality review | Reviewing PRs, refactoring, identifying technical debt |
+| `comment-reviewer` | Comment quality | Reviewing or auditing code comments and docstrings |
+| `crusty-old-engineer` | Architectural reality check | Evaluating architecture, tooling choices, "is this a good idea?" |
+| `instructions-builder` | Copilot instruction authoring | Creating or refining instruction files and rules |
+| `skill-creator` | Skill creation | Creating, improving, or evaluating Copilot skills |
 
 ## Immediate Skill Usage
 

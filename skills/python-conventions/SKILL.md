@@ -18,7 +18,7 @@ license: Proprietary. See parent repository LICENSE
 
 ## Core Instructions
 
-- Write clear and concise comments for each function
+- Write clear and concise comments for public APIs; add inline comments only to explain non-obvious *why*
 - Ensure functions have descriptive names and include type hints
 - Provide docstrings following PEP 257 conventions using Google format docstrings by default
 - Use modern built-in type annotations (e.g., `list[str]`, `dict[str, int]`) for Python 3.9+ collections; only use `typing` module for complex types like `Union`, `Optional`, `Protocol`, `TypedDict`, `Generic`
@@ -142,7 +142,7 @@ dependencies = [
 dev = [
     "pytest>=7.4.0",
     "ruff>=0.1.0",
-    "mypy>=1.5.0",
+    "ty>=0.0.1",
 ]
 
 [tool.ruff]
