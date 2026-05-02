@@ -41,6 +41,13 @@ When asserting risks, failure modes, or trade-offs:
 - Do not repeat the same command expecting different results.
 - If a fix doesn't work, try a fundamentally different approach instead of iterating.
 
+## Debugging Architecture Signal
+
+When three or more fix attempts have failed, stop applying fixes. Three failures are a signal
+that the architecture is wrong, not that the implementation needs more tweaking. The pattern to
+watch for: each fix reveals a new symptom somewhere else (coupled state, tangled dependencies,
+shared mutable state). Raise the architectural question explicitly before attempting another fix.
+
 ## Context Discipline
 
 - Do not load files "just in case". Load only what is needed for the current task.

@@ -18,11 +18,23 @@ All three test types are required:
 MANDATORY workflow for new features and bug fixes:
 
 1. Write the test first (RED — it should fail)
-2. Run the test and confirm it fails
-3. Write the minimal implementation to pass (GREEN)
+2. **Run the test and confirm it fails** — never skip this step. A test that passes immediately proves nothing; it may be testing the wrong thing or testing existing behaviour.
+3. Write the **minimal** implementation to pass (GREEN) — do not add features beyond what the test requires
 4. Run the test and confirm it passes
 5. Refactor while keeping tests green (IMPROVE)
 6. Verify coverage remains at 80%+
+
+**If code was written before the test:** delete it. Do not keep it as "reference" or "adapt" it while writing tests — that is still writing tests after the fact. Start over from a failing test.
+
+## TDD Rationalisations to Reject
+
+| Excuse | Why it is wrong |
+|--------|----------------|
+| "Too simple to need a test" | Simple code breaks. A test takes 30 seconds. |
+| "I'll write the test after" | Tests written after pass immediately and prove nothing — they test what you built, not what is required. |
+| "Already manually tested all edge cases" | Manual testing is ad-hoc, leaves no record, and cannot be re-run when the code changes. |
+| "Deleting X hours of work is wasteful" | Sunk cost. The choice is: X more hours with high confidence, or 30 minutes of low-confidence tests on code you cannot trust. |
+| "TDD is dogmatic; I'm being pragmatic" | TDD is pragmatic — it finds bugs before commit, prevents regressions, and enables safe refactoring. "Pragmatic shortcuts" mean debugging in production. |
 
 ## Test Structure (AAA)
 
