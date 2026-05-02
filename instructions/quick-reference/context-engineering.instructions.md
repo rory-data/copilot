@@ -5,19 +5,22 @@ applyTo: "**"
 
 # Context Engineering
 
-## Instruction File Loading in Monorepos
+## Instruction File Loading
 
-### Ancestor Loading (Upward)
+### Project Repos (Monorepo Ancestor Walking)
 
-- Copilot walks UP the directory tree when loading instructions
+- Copilot walks UP the directory tree when loading project instructions
 - All ancestor instruction files are loaded at session start
 - Root-level instructions are always available
-
-### Descendant Loading (Downward)
-
-- Subdirectory instruction files use lazy loading
-- Loaded only when you interact with files in those directories
+- Subdirectory instruction files use lazy loading — loaded only when you interact with files in those directories
 - Sibling directories never cross-load
+
+### Personal Config (`~/.copilot/instructions/`)
+
+- Loading is `applyTo`-based, not directory-walking
+- `applyTo: "**"` → loads unconditionally for every session
+- `applyTo: "**/*.py"` → loads only when working with Python files
+- Keep `applyTo: "**"` files concise — they always consume context budget
 
 ### Recommended Structure
 
@@ -31,9 +34,8 @@ applyTo: "**"
 
 ### Key Rules
 
-- Keep root instruction files concise — longer files reduce adherence
-- Instructions in parent directories propagate to all subdirectories automatically
-- Denial rules in parent instructions cannot be overridden by child instructions
+- Keep `applyTo: "**"` files concise — longer files reduce adherence
+- In project repos, instructions in ancestor directories propagate to all subdirectories automatically
 
 ## Skills and Progressive Disclosure
 
